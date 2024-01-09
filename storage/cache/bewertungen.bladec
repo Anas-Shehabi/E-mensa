@@ -1,0 +1,60 @@
+
+<html>
+<header>
+ <meta charset="UTF-8">
+ <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+ <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+ <link rel="stylesheet" href="css/style.css">
+ <title>Bewertungen</title>
+</header>
+
+<body>
+<div class="container">
+ <div class="row">
+
+ <div class = "col-sm-12">
+ <table class="table" border="2" style=" width: 100%";>
+ <thead class="thead-dark">
+ <tr>
+ <th scope="col">Gerichte</th>
+ <th scope="col">Bemerkungen</th>
+ <th scope="col">Bewertungen</th>
+ <th scope="col">Bewertungszeitpunkt</th>
+ <th scope="col">Löschen</th>
+ <?php if($status == 'admin'): ?>
+ <th scope="col">hervorgehoben</th>
+ <?php endif; ?>
+ </tr>
+ </thead>
+ <tbody>
+ <?php for($i=0;$i<$count;$i++): ?>
+ <tr>
+ <td><?php echo \htmlentities($ergebnis[$i]['name'], ENT_QUOTES, 'UTF-8', false); ?></td>
+ <td><?php echo \htmlentities($ergebnis[$i]['bemerkung'], ENT_QUOTES, 'UTF-8', false); ?></td>
+ <td style="text-align: center">
+ <?php for($j=0;$j<$ergebnis[$i]['SterneBewertung'];$j++): ?>
+ <span class="fa fa-star checked1"></span>
+ <?php endfor; ?>
+ </td>
+ <td style="text-align: center"><?php echo \htmlentities($ergebnis[$i]['Bewertungszeitpunkt'], ENT_QUOTES, 'UTF-8', false); ?></td>
+ <?php if($benutzer_id == $ergebnis[$i]['Benutzerid']): ?>
+ <td><a href="/loeschen?bewertungid=<?php echo \htmlentities($ergebnis[$i]['Bewertungid'], ENT_QUOTES, 'UTF-8', false); ?>" > delete </a>
+ <?php else: ?> <td> ----- </td>
+ <?php endif; ?>
+ <?php if($status == 'admin'): ?>
+ <?php if($ergebnis[$i]['hervorgehoben'] == 1): ?>
+ <td><a href="/hervorhebungabwaehlen?bewertungid=<?php echo \htmlentities($ergebnis[$i]['Bewertungid'], ENT_QUOTES, 'UTF-8', false); ?>"> &nbspHervorhebung abwählen </a></td>
+ <?php else: ?>
+ <td><a href="/hervorheben?bewertungid=<?php echo \htmlentities($ergebnis[$i]['Bewertungid'], ENT_QUOTES, 'UTF-8', false); ?>"> &nbspHervorheben </a></td>
+ <?php endif; ?>
+ <?php endif; ?>
+ </tr>
+ <?php endfor; ?>
+ </tbody>
+ </table>
+ </div>
+ </div>
+</div>
+</body>
+</html>

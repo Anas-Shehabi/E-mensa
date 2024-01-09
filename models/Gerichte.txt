@@ -1,0 +1,5 @@
+﻿Pizza mit 3 Zutaten| img/pizza.jpg| 	3,50|	6,20|
+Hänchenspieß| img/hänchenspiess.jpg|	2,90|	5,30|
+Nuggets mit dip| img/nuggets.jpg|      3,10|   5,60|
+Hänchen Schnitzel| img/schnitzel.jpg|    2,60|     4,30|
+Hänchen Schnitzel| img/schnitzel.jpg|    2,60|     4,30|

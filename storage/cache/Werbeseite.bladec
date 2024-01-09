@@ -1,0 +1,29 @@
+
+<!DOCTYPE html>
+<html lang="de">
+<head>
+ <meta charset="UTF-8">
+ <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+ <link rel="stylesheet" href="css/style.css">
+
+ <title>WebSeite</title>
+</head>
+<body>
+
+<header >
+ <nav >
+ <?php echo $this->yieldContent('header&nav'); ?>
+ </nav>
+
+</header>
+
+<main>
+ <?php echo $this->yieldContent('main'); ?>
+
+</main>
+<footer>
+ <?php echo $this->yieldContent('footer'); ?>
+</footer>
+</body>
+</html>

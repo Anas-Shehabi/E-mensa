@@ -1,0 +1,334 @@
+<?php $_shouldextend[1]=1; ?>
+
+<?php echo \htmlentities(--, ENT_QUOTES, 'UTF-8', false); ?><?php $this->startSection('php-setting'); ?>
+<?php
+
+
+$link = mysqli_connect(
+ "localhost",
+ "root",
+ "@nas6318681",
+ "emensawerbeseite");
+if (!$link) {
+ echo "Verbindung fehlgeschlagen: ", mysqli_connect_error();
+ exit();
+}
+
+$gerichte_str = file_get_contents("Gerichte.txt");
+$gerichte_arr = explode("|", $gerichte_str);
+
+
+
+$nameErr = $emailErr = $datenschutzErr = "";
+$name = $email = $datenschutz ="";
+
+
+if($_SERVER["REQUEST_METHOD"] == "POST"){
+ if(empty($_POST["Vorname"])){
+ $nameErr = "*Der Name muss gesetzt sein";
+ }elseif(ctype_space($_POST["Vorname"])){
+
+ $nameErr = "*Der Name kann nicht leerzeichnen sein";
+ }
+ else{
+ $name = test_input($_POST["Vorname"]);
+ }
+
+ if (empty($_POST["E-Mail"])) {
+ $emailErr = "*Die E-mail muss gesetzt sein";}
+ elseif ((!filter_var($_POST["E-Mail"],FILTER_VALIDATE_EMAIL)) || (!filter_var($_POST["E-Mail"],FILTER_VALIDATE_DOMAIN) )){
+ $emailErr = "*Die E-mail ist ungültig";
+ }
+ if((strpos($_POST["E-Mail"], "trashmail") !== false) || (strpos($_POST["E-Mail"], "spam") !== false) || (strpos($_POST["E-Mail"], "rcpt") !== false))
+ { $emailErr = "*Es darf nicht Spam oder Trash E-mails zu benutzen"; }
+ else {
+ $email = test_input($_POST["E-Mail"]);
+ }
+
+ if (empty($_POST["Datenschutz"])) {
+ $datenschutzErr = "*Datenschutzbestimmung ist erforderlich";
+ } else {
+ $datenschutz = test_input($_POST["Datenschutz"]);
+ }
+}
+
+function test_input($data) {
+ $data = trim($data);
+ $data = stripslashes($data);
+ $data = htmlspecialchars($data);
+ return $data;
+}
+$newsletter = $_POST['Sprache'];
+if(isset($_POST['schicken']) && $nameErr == "" && $emailErr == "" && $datenschutzErr == "") {
+ $line = $name . "|" . $email . "|" . $newsletter . "|" . $datenschutz . "\n";
+ $file = fopen("Newsletter_anmeldung.txt", 'a');
+ fwrite($file,$line);
+ $correct = "*Daten ist erfolgreich gespeichert";
+ fclose($file);
+}
+
+
+@endsection--}}
+
+@section('header&nav')
+ <nav>
+ <div class="container">
+ <div class="row">
+ <div ID="logo" class="col-sm-2" >
+ <h3 style="margin-bottom: 10px"> E - Mensa logo</h3>
+ </div>
+ <div  class = "col-sm-9">
+ <ul id="navbarhead" >
+
+ <li class="nav"> <a href="">Ankündigung </a></li>
+ <li class="nav"><a href=" #speisen"> speisen </a></li>
+ <li class="nav"><a href=" #zahlen">Zahlen </a></li>
+ <li class="nav"> <a href="#kontakt"> Kontakt </a></li>
+ <li class="nav"> <a href=" #wichtig"> Wichtig für uns</a></li>
+ </ul>
+ </div>
+ </div>
+ </div>
+ <hr style="height:2px;border-width:0;color:gray;background-color:gray">
+ </nav>
+
+@endsection
+
+{{--}}
+@section('main')
+
+ <div class="container">
+ <div class="row">
+ <div class = "col-sm-2"></div>
+ <div class = "col-sm-9">
+ <img src="w500_h350_x250_y175_b4fd72b7a62dd9b5.jpg" width="100%" height="300">
+
+ </div>
+ </div>
+ </div>
+
+
+ <div class="container">
+ <div class="row">
+ <div class = "col-sm-2"></div>
+ <div class = "col-sm-9">
+ <h3 id="speisen"> Bald gibt es Eseen auch Online ;)</h3>
+ <p class="paragraph">Wo lattenzaun aneinander mu erhaltenen vorpfeifen grasgarten. Raschen als her achtete gedacht.
+ Ungerechte freundlich messingnen am da. Em gearbeitet vergnugter um aufmerksam langweilig ja eigentlich.
+ Wo lattenzaun aneinander mu erhaltenen vorpfeifen grasgarten. Raschen als her achtete gedacht.
+ Ungerechte freundlich messingnen am da. Em gearbeitet vergnugter um aufmerksam langweilig ja eigentlich.
+ En gebogen regnete es es niemand dunkeln ja samstag unrecht.Dank und ganz hol neu also chen. Verlie kleide in sa lieber.
+
+ </p>
+
+ </div>
+ </div>
+ </div>
+
+
+
+ <div class="container">
+ <div class="row">
+ <div class="col-sm-2"> </div>
+
+ <div class="col-sm-9">
+ <h3 id="kontakt">Interesse geweckt? Wir informieren Sie!</h3>
+ </div>
+ </div>
+ </div>
+
+
+ <form class="Anmeldung" method="post" >
+
+ <div class="container">
+
+ <div class="row">
+
+ <div class="col-sm-2"></div>
+ <div class="col-sm-2">
+
+ <label class="formlabel"  >Ihre Name:</label><br>
+ <input class="anmeldung" type="text" name="Vorname" placeholder="Vorname" style="width: 75% " value="<?php echo isset($_POST['Vorname']) ? $_POST['Vorname'] : ''; ?>">
+ </div>
+
+ <div class="col-sm-2">
+
+ <label class="formlabel"  >Ihre E-Mail:</label><br>
+ <input class="anmeldung"  type="text" name="E-Mail" style="width: 75%" value="<?php echo isset($_POST['E-Mail']) ? $_POST['E-Mail'] : ''; ?>">
+
+ </div>
+
+ <div class="col-sm-2">
+
+ <label class="formlabel" >Newsletter bitte in:</label><br>
+ <select   class="anmeldung"  name="Sprache">
+ <option value = "Englisch" <?php echo (isset($_POST['Sprache']) && $_POST['Sprache'] === 'English') ? 'selected' : ''; ?>>Englisch</option>
+ <option value="Deutsch" <?php echo (isset($_POST['Sprache']) && $_POST['Sprache'] === 'Deutsch') ? 'selected' : ''; ?>>Deutsch</option>
+ </select>
+ </div>
+ </div>
+ </div>
+
+ <div class="container">
+ <div class="row">
+ <div class="col-sm-2"> </div>
+
+ <div class="col-sm-4">
+ <input type="checkbox" name="Datenschutz"  <?php if(isset($_POST['Datenschutz'], $_POST['schicken'])?' checked':'')?>>
+ <label class="formlabel" class="Datenschutz" >Den Datenschutzbeschtimungen stimme ich zu</label>
+ </div>
+ <div class="col-sm-5">
+ <input  class ="schicken" name="schicken" type="submit" value="Zum Newsletter anmelden">
+ <p> <?php echo $datenschutzErr; ?> </p>
+ <p > <?php echo $correct; ?> </p>
+ <p><?php echo $nameErr; ?></p>
+ <p><?php echo $emailErr; ?>
+ </div>
+ </div>
+ </div>
+
+ </form>
+
+
+
+ <div class="container">
+ <div class="row">
+ <div class="col-sm-2"> </div>
+ <div class="col-sm-9">
+ <h3 id="wichtig">Das ist uns wichtig</h3>
+ <ul class="infoli">
+ <li class="infoli2">Beste frische saisonale Zutaten </li>
+ <li  class="infoli2">Ausgewagene abwechslungsreiche Gerichte</li>
+ <li  class="infoli2">Sauberkeit</li>
+ </ul>
+
+ </div>
+ </div>
+ </div>
+
+ <div class="container">
+ <div class="row">
+ <div class="col-sm-2"> </div>
+ <div class="col-sm-9">
+ <h3 class="unter">Wir freuen uns auf Ihren Besuch!</h3>
+ </div>
+ </div>
+ </div>
+
+<?php $this->stopSection(); ?>
+
+
+<?php $this->startSection('Gerichteübersicht'); ?>
+
+ <div class="container">
+ <div class="row">
+ <div class = "col-sm-2"></div>
+ <div class = "col-sm-9">
+
+
+ <table border="2" style="width: 100%;" >
+ <caption>Köstlichkeiten,die Sie erwarten</caption>
+
+ <tr>
+ <th colspan="3" ></th>
+ <th>Preis intern</th>
+ <th>Preis extern</th>
+ <th>Allergen code</th>
+ </tr>
+
+ <?php
+
+ $sql="SELECT name , preis_intern , preis_extern FROM gericht ORDER BY name ASC LIMIT 5";
+
+ $sql1 = "SELECT a.code,a.name AS Allergen_name, g.name ,g.preis_intern,g.preis_extern FROM (gericht AS g, allergen AS a)
+ JOIN gericht_hat_allergen AS gha ON a.code=gha.code AND g.id=gha.gericht_id ORDER BY g.name ASC ";
+
+ $result = mysqli_query($link, $sql);
+ if (!$result) {
+ echo "Fehler während der Abfrage: ", mysqli_error($link);
+ exit();
+ }
+ while ($row = mysqli_fetch_assoc($result)) {
+ echo'<tr>'.
+ '<td colspan="3" style="height: 50px;">' . $row['name'] .'</td>'.
+ '<td style=" height:50px; text-align:center" >' . $row['preis_intern']. '</td>'.
+ '<td style= " height: 50; text-align: center" >' . $row['preis_extern']. '</td>'.
+ '<td style= " height: 50; text-align: center" >';
+
+ $result1 = mysqli_query($link, $sql1);
+ while ($row1 = mysqli_fetch_assoc($result1))
+ {
+ if($row['name']==$row1['name'])
+ echo $row1['code']." ";
+
+ }
+ '</td>'.
+ '</tr>';
+
+ }
+
+ ?>
+
+
+
+ </table>
+ </div>
+ </div>
+ </div>
+
+
+
+ <div class="container">
+ <div class="row">
+ <div class="col-sm-2" ></div>
+ <div class="col-sm-9" >
+ <?php
+ $result1 = mysqli_query($link, $sql1);
+ $arr = Array();
+ $arr1 = Array();
+ while ($row1 = mysqli_fetch_assoc($result1)) {
+ array_push($arr,$row1['Allergen_name']);
+ array_push($arr1,$row1['code']);
+ }
+ $arr = array_unique($arr);
+ $arr1 = array_unique($arr1);
+ echo '<ul>';
+ for($i = 0; $i< count($arr1);$i++) {
+ if ($arr1[$i]!="")
+ echo '<li>'.$arr[$i].": ". $arr1[$i].'</li>';
+ }
+
+ echo'</ul>';
+ mysqli_free_result($result);
+ mysqli_close($link);
+ ?>
+
+<?php $this->stopSection(); ?>
+--}}
+<?php $this->startSection('footer'); ?>
+ <hr style="height:2px;border-width:0;color:gray;background-color:gray">
+
+
+ <div class="container">
+ <div class="row">
+ <div class="col-sm-2">  </div>
+ <div class="col-sm-3">
+ <p class="foot"> <span>(C)</span> E-Mensa GmbH</p>
+ </div>
+ <div class="col-sm-3">
+ <p class="foot">Anas & Dirar</p>
+ </div>
+ <div class="col-sm-3">
+ <a href="" name="Impressum" style="padding-right: 5px; color: lightseagreen; text-decoration: underline">Impressum </a>
+ </div>
+
+
+ </div>
+ </div>
+
+
+<?php $this->stopSection(); ?>
+
+
+
+<?php if (isset($_shouldextend[1])) { echo $this->runChild('Werbeseite'); } ?>

@@ -1,0 +1,151 @@
+body
+{
+    font-family: "Comic Sans MS";
+}
+
+.container{
+    margin-bottom: 20px;
+}
+h3{
+    margin-bottom: 15px;
+    font-weight: bold;
+
+}
+
+
+#logo {
+
+    border-style: solid;
+    padding: 5px;
+    padding-bottom:inherit;
+    margin-top: 10px;
+    text-align: center;
+    margin-bottom: 0px;
+}
+
+
+
+#navbarhead{
+    list-style:none;
+    overflow: hidden;
+    border-style: solid;
+    margin-top: 10px;
+
+}
+
+
+#logo {
+
+    border-style: solid;
+    padding: 5px;
+    padding-bottom:inherit;
+    margin-top: 10px;
+    text-align: center;
+}
+
+.nav
+{
+    float : left;
+    padding:20px;
+    font-size: 16px;
+
+}
+a{
+    color : lightseagreen;
+    text-decoration: underline;
+
+}
+
+.paragraph{
+    border-style: solid ;
+    padding: 5px;
+}
+
+table caption{
+    font-weight: bold;
+    text-align: left;
+    color: black;
+    font-size: 25px;
+
+}
+th{
+    text-align: center;
+}
+
+.newP{
+
+
+    text-align: center; height: 200px;
+    background: #3e5667;
+}
+.anmeldung
+{
+
+    color: black;
+}
+.schicken
+{padding-right: 20px; margin-left: 25%}
+.unter{text-align: center; font-weight: bold}
+hr{border-style: solid; font-size: 5px}
+span {
+    font-size: x-small;
+}
+.foot
+{
+    text-align: center;
+    border-right: solid  black 2px;
+}
+.infoli
+{
+    margin-left: 150px;
+
+}
+.Datenschutz
+{
+    margin-top: 10px;
+}
+
+.Zahlen{
+    margin-top: 20px;
+    width: 650px;
+    margin-left: 150px;
+    font-size: 25px;
+    border: none
+}
+.infoli2{
+
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.formlabel{
+    color:black;
+}
+
+.gerichte{
+
+    height: 40px;
+    width: 60px;
+}
+.navbar-fixed-top{
+
+    z-index:10;
+    background: lightgray;
+}
+
+header{
+    margin: 0 ;
+}
+.checked1 {
+    color: orange;
+}
+
+@media only screen and (max-width: 600px) {
+    .mr-sm-2 {
+        display: block;
+    }
+    .res_img {
+        width: 200px;
+        height: 200px;
+    }
+}
